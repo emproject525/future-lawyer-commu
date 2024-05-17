@@ -1,0 +1,109 @@
+@use 'variable';
+@use 'mixin';
+
+.table_latitude {
+  width: 100%;
+
+  caption {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #{variable.$empathy};
+    text-align: center;
+  }
+
+  thead {
+    border-top: 2px solid var(--gray-300-hex);
+    border-bottom: 2px solid var(--gray-300-hex);
+
+    th {
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.8em;
+      border-bottom: 1px solid var(--gray-300-hex);
+      &:nth-child(1) {
+        border-left: 0px;
+      }
+      &:nth-last-child(1) {
+        border-right: 0px;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid var(--gray-300-hex);
+      font-size: 14px;
+      text-align: center;
+
+      td {
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--gray-300-hex);
+      }
+
+      th {
+        padding-left: 10px;
+        border-bottom: 1px solid var(--gray-300-hex);
+      }
+    }
+  }
+
+  tfoot {
+    font-style: italic;
+    border-bottom: 2px solid #{variable.$empathy};
+
+    tr {
+      td {
+        padding: 10px;
+        border: 1px solid var(--gray-300-hex);
+      }
+    }
+  }
+}
+
+.table_latitude_small {
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.table_latitude_link {
+  text-align: start;
+}
+
+.pagination_wrap {
+  text-align: center;
+}
+
+.pagination {
+  display: inline-block;
+
+  li {
+    display: inline;
+  }
+
+  a {
+    font-size: 0.8em;
+    float: left;
+    padding: 6px 0;
+    text-decoration: none;
+    width: 35px;
+    height: 31px;
+    line-height: 20px;
+
+    &.active {
+      background-color: #{variable.$primary};
+      color: #{variable.$white};
+    }
+
+    &.disabled {
+      user-select: none;
+      pointer-events: none;
+      color: #{variable.$gray-300};
+    }
+
+    &:hover:not(.active, .disabled) {
+      background-color: var(--gray-300-hex);
+    }
+  }
+}

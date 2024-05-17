@@ -1,0 +1,92 @@
+@use 'variable';
+@use 'mixin';
+
+/** ------------------------------
+* 게시글 목록
+* 게시글 상세
+* 본문, 댓글
+* ---------------------------- **/
+
+.category {
+  display: flex;
+  gap: 1em;
+}
+
+.breadcrumb {
+  cursor: default;
+  font-size: 13px;
+  color: var(--gray-700-hex);
+}
+
+.title {
+  font-size: 1.6em;
+}
+
+.info {
+  font-size: 0.8em;
+  color: var(--gray-700-hex);
+}
+
+.comment_item {
+  font-size: 0.9em;
+  line-height: 1.4em;
+  margin-bottom: variable.$gap * 2;
+  white-space: pre-wrap;
+
+  .noname_title {
+    font-size: 0.8em;
+    font-weight: bold;
+    user-select: none;
+  }
+
+  .noname_regdt {
+    font-size: 0.8em;
+    color: var(--gray-700-hex);
+    margin-left: 0.8em;
+    user-select: none;
+  }
+}
+
+.contents_body {
+  font-size: 1em;
+  font-weight: normal;
+
+  ol,
+  ul {
+    padding-left: 16px;
+  }
+
+  a {
+    // color: #3ea6ff !important;
+    color: rgb(38 135 219) !important;
+  }
+}
+
+.horizon {
+  height: 1px;
+  border: none;
+  background-color: var(--gray-400-hex);
+}
+
+.rotate_180 {
+  transition: transform 0.5s;
+  transform: rotate(180deg);
+}
+
+.rotate_0 {
+  transition: transform 0.5s;
+  transform: rotate(0deg);
+}
+
+@keyframes spin_animation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin_animation 3s;
+}
