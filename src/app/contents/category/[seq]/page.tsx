@@ -94,7 +94,7 @@ export default async function Page({
         <ul className={styles.category}>
           {category.body.list.map(({ seq, main, sub, subName }) => (
             <li key={`${main}-${sub}`}>
-              <Link href={`/contents/c/${seq}`}>
+              <Link href={`/contents/category/${seq}`}>
                 {params?.['seq'] === String(seq) ? (
                   <strong>
                     <Span>{subName}</Span>

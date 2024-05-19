@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { FaAngleLeft } from 'react-icons/fa';
 import { FaAngleRight } from 'react-icons/fa';
 import styles from '@/styles/table.module.scss';
+import Span from '../Font/Span';
 
 export type PaginationProps = {
   /**
@@ -48,7 +49,7 @@ const Pagination = ({
   });
 
   useEffect(() => {
-    const totalPage = Math.ceil(totalCount / count);
+    const totalPage = Math.ceil(totalCount / count) || 1;
     const start = Math.floor(page / count) * displayPage + 1;
     const end =
       start + displayPage > totalPage ? totalPage : start + displayPage;
@@ -83,14 +84,11 @@ const Pagination = ({
         {Array.from({ length: pages.end - pages.start + 1 }).map(
           (_value, idx) => (
             <li key={`pagination-${idx}`}>
-              <Link
-                href={`${pathname}?page=${idx + 1}`}
-                className={clsx({
-                  [styles.active]: idx + 1 === page,
-                })}
-              >
-                {idx + 1}
-              </Link>
+              {idx + 1 === page ? (
+                <Span className={styles.active}>{idx + 1}</Span>
+              ) : (
+                <Link href={`${pathname}?page=${idx + 1}`}>{idx + 1}</Link>
+              )}
             </li>
           ),
         )}

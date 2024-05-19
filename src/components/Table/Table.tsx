@@ -4,6 +4,7 @@ import React, { ThHTMLAttributes } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import styles from '@/styles/table.module.scss';
+import Span from '../Font/Span';
 
 export type TableProps<T extends Record<string, any>> = {
   caption?: React.ReactNode;
@@ -56,6 +57,13 @@ const Table = <T extends Record<string, any> = {}>(props: TableProps<T>) => {
         </tr>
       </thead>
       <tbody>
+        {(rowDatas?.length || 0) === 0 && (
+          <tr>
+            <td colSpan={fields.length}>
+              <Span>게시글이 없습니다.</Span>
+            </td>
+          </tr>
+        )}
         {rowDatas?.map((row, idx) => (
           <tr key={`tbody-tr-${idx}`}>
             {fields.map((column, columnIdx) => {
