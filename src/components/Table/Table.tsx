@@ -58,7 +58,7 @@ const Table = <T extends Record<string, any> = {}>(props: TableProps<T>) => {
       </thead>
       <tbody>
         {(rowDatas?.length || 0) === 0 && (
-          <tr>
+          <tr className={styles.nodata}>
             <td colSpan={fields.length}>
               <Span>게시글이 없습니다.</Span>
             </td>

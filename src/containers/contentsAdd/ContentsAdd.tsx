@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import client from '@/services/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { IRes } from '@/types';
+import { ICategory, IPagingList, IRes } from '@/types';
 import FlexBox from '@/components/Box/FlexBox';
 import ContentsEditor from '@/components/Editor/ContentsEditor';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
+import Select from '@/components/Input/Select';
 import Spinner from '@/components/Icon/Spinner';
 import { AxiosError, AxiosResponse } from 'axios';
 import { escapeMySQL } from '@/utils/utils';
@@ -20,13 +21,25 @@ import { escapeMySQL } from '@/utils/utils';
 const ContentsAdd = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [category, setCategory] = useState<ICategory | undefined>();
   const router = useRouter();
+  const { data: categories, isFetched } = useQuery<ICategory[]>({
+    queryKey: ['category'],
+    queryFn: () =>
+      client
+        .get<IRes<IPagingList<ICategory>>>(`http://localhost:3000/api/category`)
+        .then((res) => {
+          setCategory(res.data.body.list?.[0]);
+          return res.data.body.list;
+        }),
+  });
   const { mutate, isPending } = useMutation<
     AxiosResponse<IRes<boolean>>,
     AxiosError,
     {
       title: string;
       body: string;
+      categorySeq: number;
     }
   >({
     mutationFn: (data) => client.post('/contents/add', data),
@@ -55,6 +68,7 @@ const ContentsAdd = () => {
 
   return (
     <FlexBox
+      fullHeight
       column
       style={{
         rowGap: '1em',
@@ -69,6 +83,50 @@ const ContentsAdd = () => {
         onChange={(e) => setTitle(e.target.value.slice(0, 100))}
         onlyBorderBottom
       />
+      <FlexBox
+        alignItemsStart
+        fullWidth
+        style={{
+          columnGap: '0.5em',
+        }}
+      >
+        <Select<number>
+          value={category?.main}
+          onChange={(newValue) => {
+            setCategory(
+              categories?.find((i) => i.main === newValue && i.sub === 1),
+            );
+          }}
+          options={
+            categories
+              ?.filter((item) => item.sub === 1)
+              ?.map((item) => ({
+                label: item.mainName,
+                value: item.main,
+              })) || []
+          }
+        />
+        {!!category && (
+          <Select<number>
+            value={category?.sub}
+            onChange={(newValue) =>
+              setCategory((b) =>
+                categories?.find(
+                  (i) => i.main === b?.main && i.sub === newValue,
+                ),
+              )
+            }
+            options={
+              categories
+                ?.filter((item) => item.main === category?.main)
+                ?.map((item) => ({
+                  label: item.subName,
+                  value: item.sub,
+                })) || []
+            }
+          />
+        )}
+      </FlexBox>
       <ContentsEditor
         autoHeight
         value={body}
@@ -77,13 +135,17 @@ const ContentsAdd = () => {
       <Button
         block
         flexContents
+        color="success"
         disabled={isPending}
-        onClick={() =>
-          mutate({
-            title: escapeMySQL(title),
-            body: escapeMySQL(body),
-          })
-        }
+        onClick={() => {
+          if (category) {
+            mutate({
+              title: escapeMySQL(title),
+              body: escapeMySQL(body),
+              categorySeq: category.seq,
+            });
+          }
+        }}
       >
         게시글 등록
         {isPending && <Spinner />}

@@ -46,6 +46,10 @@
         padding-left: 10px;
         border-bottom: 1px solid var(--gray-300-hex);
       }
+
+      &.nodata {
+        height: 120px;
+      }
     }
   }
 

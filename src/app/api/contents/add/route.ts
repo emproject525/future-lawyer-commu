@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
   const payload: {
     title: string;
     body: string;
+    categorySeq: number;
   } = await req.json();
   // const ip = (req.headers.get('X-Forwarded-For') ?? '127.0.0.1').split(',')[0];
   const ip = req.ip ?? '127.0.0.1';
@@ -18,7 +19,7 @@ export async function POST(req: NextRequest) {
   let success = false;
 
   await transaction(
-    `insert into contents(title, user_seq, reg_dt, reg_ip, category_seq) values ('${payload.title}', 1, now(), '${ip}', 1);`,
+    `insert into contents(title, user_seq, reg_dt, reg_ip, category_seq) values ('${payload.title}', 1, now(), '${ip}', ${payload.categorySeq});`,
     `insert into contents_body(body, contents_seq) values ('${payload.body}', (select seq from contents where user_seq=1 order by seq desc limit 1));`,
   ).then(
     () => {

@@ -10,9 +10,15 @@
 }
 .ql-container {
   font-family: inherit;
+  font-size: 0.9em;
 }
 .ql-editor {
   min-height: 300px;
+
+  &.ql-editor.ql-blank::before {
+    color: var(--foreground-rgb);
+    opacity: 0.6;
+  }
 }
 .ql-toolbar.ql-snow {
   border: 0;
@@ -22,4 +28,17 @@
   border: 0;
   height: 100%;
   overflow: hidden;
+}
+.ql-snow .ql-fill,
+.ql-snow .ql-stroke.ql-fill {
+  fill: var(--foreground-rgb);
+}
+.ql-snow .ql-stroke {
+  stroke: var(--foreground-rgb);
+}
+.ql-snow .ql-picker {
+  color: var(--foreground-rgb);
+}
+.ql-snow .ql-picker-options {
+  background-color: var(--background-rgb);
 }

@@ -13,13 +13,36 @@ export type FlexBoxProps = {
    * @default row
    */
   row?: boolean;
+  /**
+   * Set Height 100%
+   */
+  fullHeight?: boolean;
+  /**
+   * Set Width 100%
+   */
+  fullWidth?: boolean;
+  /**
+   * Set align-items flex-start;
+   */
+  alignItemsStart?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const FlexBox = (props: FlexBoxProps) => {
-  const { children, className, column, row, ...rest } = props;
+const FlexBox = ({
+  children,
+  className,
+  column,
+  row,
+  fullWidth,
+  fullHeight,
+  alignItemsStart,
+  ...rest
+}: FlexBoxProps) => {
   return (
     <div
       className={clsx(styles.flex_box, className, {
+        [styles.full_width]: fullWidth,
+        [styles.full_height]: fullHeight,
+        [styles.align_items_start]: alignItemsStart,
         [styles.flex_box_column]: column,
         [styles.flex_box_row]: row,
       })}

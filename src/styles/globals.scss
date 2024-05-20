@@ -40,7 +40,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: #fff;
+    --foreground-rgb: rgb(255, 255, 255);
     --background-rgb: rgb(30, 32, 34);
 
     @each $name, $color in variable.$theme-color {
@@ -124,7 +124,7 @@ input,
 textarea {
   font-family: inherit;
   &::placeholder {
-    color: #{variable.$gray-300};
+    color: #{variable.$gray-400};
   }
 }
 

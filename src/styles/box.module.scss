@@ -2,10 +2,21 @@
 @use 'mixin';
 
 .flex_box {
-  height: 100%;
   display: flex;
   align-items: center;
   gap: #{variable.$gap * 4};
+
+  &.full_height {
+    height: 100%;
+  }
+
+  &.full_width {
+    width: 100%;
+  }
+
+  &.align_items_start {
+    align-items: flex-start;
+  }
 }
 
 .flex_box_column {

@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { select } from '@/db/pool';
 import { IComment } from '@/types';
 

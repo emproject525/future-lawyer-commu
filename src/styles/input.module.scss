@@ -32,12 +32,11 @@
   border-bottom: 1px solid
     light-dark(#{variable.$gray-300}, lighten(variable.$gray-300, 10%));
   background-color: inherit;
-  color: #{variable.$gray-800};
 
   &:focus:not(:disabled),
   &:active:not(:disabled) {
-    border-width: 2px;
-    box-shadow: initial;
+    // box-shadow: initial;
+    box-shadow: inset 0 -1px 0 0 #{variable.$gray-300};
   }
 }
 
@@ -60,4 +59,9 @@
   padding-top: #{variable.$gap * 0.5};
   padding-bottom: #{variable.$gap * 0.5};
   border-radius: 4px;
+}
+
+.select {
+  font-family: inherit;
+  padding: 0.3em 1.2em 0.3em 0.5em;
 }
