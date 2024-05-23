@@ -51,14 +51,18 @@
   font-size: 1em;
   font-weight: normal;
 
-  ol,
-  ul {
-    padding-left: 16px;
-  }
+  // ol,
+  // ul {
+  //   padding-left: 16px;
+  // }
 
   a {
     // color: #3ea6ff !important;
     color: rgb(38 135 219) !important;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

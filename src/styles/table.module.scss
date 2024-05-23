@@ -40,6 +40,10 @@
       td {
         padding: 8px 10px;
         border-bottom: 1px solid var(--gray-300-hex);
+
+        a:hover {
+          text-decoration: underline;
+        }
       }
 
       th {
