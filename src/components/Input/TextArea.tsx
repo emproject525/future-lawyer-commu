@@ -17,9 +17,13 @@ export type TextAreaProps = {
   'disabled' | 'size'
 >;
 
-const TextArea = (props: TextAreaProps) => {
-  const { error, disabled, size, onlyBorderBottom, ...rest } = props;
-
+const TextArea: React.FC<TextAreaProps> = ({
+  error,
+  disabled,
+  size,
+  onlyBorderBottom,
+  ...rest
+}: TextAreaProps) => {
   return (
     <textarea
       disabled={disabled}

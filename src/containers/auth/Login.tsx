@@ -1,16 +1,12 @@
 'use client';
 
+import React, { useState, useEffect, PropsWithChildren } from 'react';
 import { getSavedAccessToken } from '@/utils';
-import React, { useState, useEffect } from 'react';
-
-type LoggedInProps = {
-  children?: React.ReactNode;
-};
 
 /**
  * 로그인되었을 때만 노출
  */
-const LoggedIn = ({ children }: LoggedInProps) => {
+const Login: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -24,4 +20,4 @@ const LoggedIn = ({ children }: LoggedInProps) => {
   return children;
 };
 
-export default LoggedIn;
+export default Login;

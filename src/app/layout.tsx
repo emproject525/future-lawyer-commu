@@ -5,6 +5,7 @@ import '@/styles/globals.scss';
 import '@/styles/thirdparty.scss';
 import styles from '@/styles/layout.module.scss';
 import Nav from '@/containers/layout/Nav';
+import Actions from '@/containers/layout/Actions';
 import ReactQueryProviders from '@/services/ReactQueryProviders';
 
 // const notosans = Noto_Sans_KR({
@@ -47,6 +48,7 @@ export default function RootLayout({
             <div className={styles.header_area}>
               <div>HOME</div>
               <Nav />
+              <Actions />
             </div>
           </header>
           <ReactQueryProviders>

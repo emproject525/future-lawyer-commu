@@ -16,8 +16,11 @@ export type ContentsEditorProps = {
  * @see https://quilljs.com/
  * @returns
  */
-const ContentsEditor = (props: ContentsEditorProps) => {
-  const { autoHeight, onChange, ...rest } = props;
+const ContentsEditor: React.FC<ContentsEditorProps> = ({
+  autoHeight,
+  onChange,
+  ...rest
+}) => {
   const [value, setValue] = useState('');
 
   const modules = {

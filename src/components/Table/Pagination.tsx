@@ -32,14 +32,14 @@ export type PaginationProps = {
 /**
  * @see https://www.w3schools.com/css/css3_pagination.asp
  */
-const Pagination = ({
+const Pagination: React.FC<PaginationProps> = ({
   totalCount,
   count,
   page,
   displayPage = 10,
   className,
   ...rest
-}: PaginationProps) => {
+}) => {
   const pathname = usePathname();
   const [pages, setPages] = useState({
     start: 1,

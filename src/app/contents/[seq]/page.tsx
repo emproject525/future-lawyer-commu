@@ -13,6 +13,7 @@ import Link from 'next/link';
 import Hr from '@/components/Hr/Hr';
 import FlexBox from '@/components/Box/FlexBox';
 import CommendAdd from '@/containers/commentAdd';
+import Login from '@/containers/auth/Login';
 
 type PageData = {
   status: number;
@@ -124,17 +125,23 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
                 목록
               </Button>
             </Link>
-            <Button flexContents variant="outlined">
-              스크랩
-            </Button>
+            <Login>
+              <Button flexContents variant="outlined">
+                스크랩
+              </Button>
+            </Login>
             <Button flexContents variant="outlined">
               <IoShareSocialSharp />
               공유
             </Button>
           </FlexBox>
           <Hr />
-          <CommendAdd totalCommentCnt={body?.commentCnt || 0} />
-          <Hr />
+          <Login>
+            <>
+              <CommendAdd totalCommentCnt={body?.commentCnt || 0} />
+              <Hr />
+            </>
+          </Login>
         </div>
       )}
     </main>

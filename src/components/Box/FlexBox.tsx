@@ -27,7 +27,7 @@ export type FlexBoxProps = {
   alignItemsStart?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const FlexBox = ({
+const FlexBox: React.FC<FlexBoxProps> = ({
   children,
   className,
   column,
@@ -36,7 +36,7 @@ const FlexBox = ({
   fullHeight,
   alignItemsStart,
   ...rest
-}: FlexBoxProps) => {
+}) => {
   return (
     <div
       className={clsx(styles.flex_box, className, {

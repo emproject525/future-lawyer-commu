@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { IRes, IUser } from '@/types';
-import jwt from 'jsonwebtoken';
+import { IUser } from '@/types';
 import crypto from 'crypto';
 import { select, execute } from '@/db/pool';
-
-const SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY || '';
+import { getAccessToken, getRefreshToken } from '@/utils/jwtUtils';
 
 export async function POST(req: NextRequest) {
   let success = false;
@@ -17,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     if (email && password) {
       const encryption = crypto
-        .createHash('sha256')
+        .createHash(process.env.NEXT_PUBLIC_CRYPTO_HASH!)
         .update(password)
         .digest('base64');
 
@@ -37,14 +35,8 @@ export async function POST(req: NextRequest) {
       }
 
       const seq: number = (user as IUser).seq;
-      const accessToken = jwt.sign({ seq }, SECRET_KEY, {
-        algorithm: 'HS256',
-        expiresIn: '1h',
-      });
-      const refreshToken = jwt.sign({ seq }, SECRET_KEY, {
-        algorithm: 'HS256',
-        expiresIn: '14d',
-      });
+      const accessToken = getAccessToken(seq);
+      const refreshToken = getRefreshToken(seq);
 
       await execute(`
         update user
@@ -69,10 +61,11 @@ export async function POST(req: NextRequest) {
         'Set-Cookie',
         `refreshToken=${refreshToken}; Path=/; Max-Age=${60 * 60 * 24 * 14}; HttpOnly;`,
       );
-      headers.append(
-        'Set-Cookie',
-        `accessToken=${accessToken}; Path=/; Max-Age=${60 * 60}; HttpOnly;`,
-      );
+      // headers.set('Access-Control-Expose-Headers', 'Set-Cookie');
+      // headers.append(
+      //   'Set-Cookie',
+      //   `accessToken=${accessToken}; Path=/; Max-Age=${60 * 60}; HttpOnly;`,
+      // );
 
       return NextResponse.json(
         {

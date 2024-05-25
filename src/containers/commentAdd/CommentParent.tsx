@@ -12,7 +12,7 @@ import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import styles from '@/styles/contens.module.scss';
-import { escapeMySQL } from '@/utils/utils';
+import { escapeMySQL } from '@/utils/mySqlUtils';
 import Hr from '@/components/Hr/Hr';
 
 export type CommentParentProps = {

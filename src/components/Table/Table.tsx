@@ -35,9 +35,13 @@ export type TableProps<T extends Record<string, any>> = {
 /**
  * @see styles https://codepen.io/_fhdamd/pen/JRRRZX
  */
-const Table = <T extends Record<string, any> = {}>(props: TableProps<T>) => {
-  const { caption, fields, idField, onClickRow, rowDatas } = props;
-
+const Table = <T extends Record<string, any> = {}>({
+  caption,
+  fields,
+  idField,
+  onClickRow,
+  rowDatas,
+}: TableProps<T>) => {
   return (
     <table className={clsx(styles['table_latitude'])}>
       {caption && <caption>{caption}</caption>}

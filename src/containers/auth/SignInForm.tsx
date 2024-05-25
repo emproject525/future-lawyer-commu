@@ -9,9 +9,14 @@ import client from '@/services/client';
 import { IRes } from '@/types';
 import { AxiosError } from 'axios';
 import Form from '@/components/Input/Form';
+import { saveAccessToken } from '@/utils';
 
-const SignInForm = () => {
-  const route = useRouter();
+/**
+ * 로그인폼
+ * @returns
+ */
+const SignInForm: React.FC<{}> = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { mutate, isPending } = useMutation<
@@ -24,7 +29,9 @@ const SignInForm = () => {
       client.post(`/auth/signin`, body).then((res) => res.data),
     onSuccess: (res) => {
       if (res.header.success) {
-        route.push('/contents');
+        saveAccessToken(res.body);
+        router.back();
+        router.refresh();
       } else {
         alert(res.body);
       }

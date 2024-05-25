@@ -30,7 +30,7 @@ export type ButtonProps = {
   disabled?: boolean;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>;
 
-const Button = ({
+const Button: React.FC<ButtonProps> = ({
   size,
   variant,
   color,
@@ -39,7 +39,7 @@ const Button = ({
   flexContents,
   disabled,
   ...rest
-}: ButtonProps) => {
+}) => {
   return (
     <button
       className={clsx(styles.button, {

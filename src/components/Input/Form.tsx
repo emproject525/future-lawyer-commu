@@ -6,7 +6,7 @@ export type FormProps = {
   onSubmit?: (target: HTMLFormElement) => void | Promise<void>;
 } & Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'>;
 
-const Form = ({ children, onSubmit, ...rest }: FormProps) => {
+const Form: React.FC<FormProps> = ({ children, onSubmit, ...rest }) => {
   return (
     <form
       {...rest}

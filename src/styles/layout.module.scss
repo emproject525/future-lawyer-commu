@@ -47,6 +47,10 @@
   padding-left: 1.2em;
   padding-right: 1.2em;
 
+  nav {
+    flex-grow: 1;
+  }
+
   nav > ul {
     display: flex;
     height: 100%;
@@ -57,7 +61,7 @@
       font-style: normal;
       text-decoration: none;
       text-transform: uppercase;
-      font-weight: 500;
+      font-weight: bold;
       font-size: 0.8rem;
       height: 100%;
       color: #fff;
@@ -80,6 +84,12 @@
       color: #{variable.$positive};
       background: hsla(0, 0%, 100%, 0.1);
       opacity: 1;
+    }
+  }
+
+  .actions {
+    a {
+      padding: 0.5em;
     }
   }
 

@@ -15,7 +15,7 @@ export type CommentProps = {
  * @param param0
  * @returns
  */
-const Comment = ({ title, regDt, body, children }: CommentProps) => {
+const Comment: React.FC<CommentProps> = ({ title, regDt, body, children }) => {
   return (
     <div className={styles.comment_item}>
       <div className="mb-1">

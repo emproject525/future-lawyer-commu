@@ -12,13 +12,14 @@ import Input from '@/components/Input/Input';
 import Select from '@/components/Input/Select';
 import Spinner from '@/components/Icon/Spinner';
 import { AxiosError, AxiosResponse } from 'axios';
-import { escapeMySQL } from '@/utils/utils';
+import { escapeMySQL } from '@/utils/mySqlUtils';
+import { getSavedAccessToken } from '@/utils';
 
 /**
  * app > contents > add > page
  * @returns
  */
-const ContentsAdd = () => {
+const ContentsAdd: React.FC = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [category, setCategory] = useState<ICategory | undefined>();
@@ -42,7 +43,13 @@ const ContentsAdd = () => {
       categorySeq: number;
     }
   >({
-    mutationFn: (data) => client.post('/contents/add', data),
+    mutationFn: (data) =>
+      client.post('/contents/add', data, {
+        withCredentials: true,
+        headers: {
+          Authorization: getSavedAccessToken(),
+        },
+      }),
     onSuccess: (res) => {
       if (res.status === 200 && res.data.header.success) {
         alert('게시글을 등록하였습니다.');

@@ -25,9 +25,13 @@ export type SpanProps = {
   fontSize?: CSSProperties['fontSize'];
 } & React.HTMLAttributes<HTMLSpanElement>;
 
-const Span = (props: SpanProps) => {
-  const { color, children, fontSize, style, ...rest } = props;
-
+const Span: React.FC<SpanProps> = ({
+  color,
+  children,
+  fontSize,
+  style,
+  ...rest
+}) => {
   return (
     <span
       className={clsx({
