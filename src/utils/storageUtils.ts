@@ -57,9 +57,11 @@ export const saveStorageItem = (
 
 /**
  * getSavedAccessToken
+ * @param prefix Bearer 붙이지말지 여부
  * @returns string
  */
-export const getSavedAccessToken = () => getStorageItem(ACCESS_TOKEN_KEY);
+export const getSavedAccessToken = (prefix?: boolean) =>
+  `${prefix ?? `Bearer `}${getStorageItem(ACCESS_TOKEN_KEY)}`;
 
 /**
  * saveAccessToken

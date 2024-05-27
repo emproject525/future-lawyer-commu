@@ -1,6 +1,6 @@
 import jwt, { VerifyErrors } from 'jsonwebtoken';
 
-const SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY || '';
+const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET || '';
 const ALGORITHM = 'HS256';
 
 /**
@@ -9,7 +9,7 @@ const ALGORITHM = 'HS256';
  * @returns token
  */
 export const getAccessToken = (seq: number) =>
-  jwt.sign({ seq }, SECRET_KEY, {
+  jwt.sign({ seq }, NEXTAUTH_SECRET, {
     algorithm: ALGORITHM,
     expiresIn: '1h',
   });
@@ -20,7 +20,7 @@ export const getAccessToken = (seq: number) =>
  * @returns token
  */
 export const getRefreshToken = (seq: number) =>
-  jwt.sign({ seq }, SECRET_KEY, {
+  jwt.sign({ seq }, NEXTAUTH_SECRET, {
     algorithm: ALGORITHM,
     expiresIn: '14d',
   });
@@ -41,7 +41,7 @@ export const decodeToken = (
   new Promise((resolve) =>
     jwt.verify(
       token,
-      SECRET_KEY,
+      NEXTAUTH_SECRET,
       {
         algorithms: [ALGORITHM],
       },

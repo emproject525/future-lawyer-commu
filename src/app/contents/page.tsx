@@ -7,7 +7,7 @@ import Pagination from '@/components/Table/Pagination';
 import styles from '@/styles/contens.module.scss';
 import FlexBox from '@/components/Box/FlexBox';
 import Span from '@/components/Font/Span';
-import Login from '@/containers/auth/Login';
+import AuthWrapper from '@/ui/auth/AuthWrapper';
 
 // * generic 컴포넌트를 dynamic하게 import하는 방법
 // const Table = dynamic(() => import('@/components/Table/Table'), {
@@ -142,11 +142,11 @@ export default async function Page({
           textAlign: 'right',
         }}
       >
-        <Login>
+        <AuthWrapper needLogin>
           <Link href="/contents/add">
             <Button>글 작성</Button>
           </Link>
-        </Login>
+        </AuthWrapper>
       </div>
       <Pagination
         page={Number(searchParams?.['page'] ?? 1)}

@@ -12,8 +12,8 @@ import Span from '@/components/Font/Span';
 import Link from 'next/link';
 import Hr from '@/components/Hr/Hr';
 import FlexBox from '@/components/Box/FlexBox';
-import CommendAdd from '@/containers/commentAdd';
-import Login from '@/containers/auth/Login';
+import CommendAdd from '@/ui/commentAdd';
+import AuthWrapper from '@/ui/auth/AuthWrapper';
 
 type PageData = {
   status: number;
@@ -51,7 +51,7 @@ export async function generateMetadata(
   // read route params
   const { status, header, body } = await getData(params);
   const title = body?.title || '';
-  const url = `${process.env.NEXT_PUBLIC_SITE_DOMAIN}/contents/${params.seq}`;
+  const url = `${process.env.NEXTAUTH_URL}/contents/${params.seq}`;
 
   // fetch data
   // const product = await fetch(`https://.../${id}`).then((res) => res.json());
@@ -125,23 +125,23 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
                 목록
               </Button>
             </Link>
-            <Login>
+            <AuthWrapper needLogin>
               <Button flexContents variant="outlined">
                 스크랩
               </Button>
-            </Login>
+            </AuthWrapper>
             <Button flexContents variant="outlined">
               <IoShareSocialSharp />
               공유
             </Button>
           </FlexBox>
           <Hr />
-          <Login>
+          <AuthWrapper needLogin>
             <>
               <CommendAdd totalCommentCnt={body?.commentCnt || 0} />
               <Hr />
             </>
-          </Login>
+          </AuthWrapper>
         </div>
       )}
     </main>

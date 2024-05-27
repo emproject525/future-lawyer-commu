@@ -9,10 +9,9 @@ import client from '@/services/client';
 import { IRes } from '@/types';
 import { AxiosError } from 'axios';
 import Form from '@/components/Input/Form';
-import { saveAccessToken } from '@/utils';
 
 /**
- * 로그인폼
+ * 로그인폼 (백업용 삭제 예정)
  * @returns
  */
 const SignInForm: React.FC<{}> = () => {
@@ -25,11 +24,14 @@ const SignInForm: React.FC<{}> = () => {
     { email: string; password: string }
   >({
     mutationKey: [email, password],
-    mutationFn: (body) =>
-      client.post(`/auth/signin`, body).then((res) => res.data),
+    mutationFn: (body) => {
+      const formData = new FormData();
+      formData.append('email', body.email);
+      formData.append('password', body.password);
+      return client.post(`/auth/signin`, formData).then((res) => res.data);
+    },
     onSuccess: (res) => {
       if (res.header.success) {
-        saveAccessToken(res.body);
         router.back();
         router.refresh();
       } else {
@@ -55,6 +57,7 @@ const SignInForm: React.FC<{}> = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={isPending}
+          placeholder="email@example.com"
         />
       </div>
       <div>

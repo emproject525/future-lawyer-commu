@@ -1,7 +1,7 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import dynamic from 'next/dynamic';
 
-const ContentsAdd = dynamic(() => import('@/containers/contentsAdd'), {
+const ContentsAdd = dynamic(() => import('@/ui/contentsAdd'), {
   ssr: false,
 });
 

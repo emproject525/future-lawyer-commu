@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     if (email && password) {
       const encryption = crypto
-        .createHash(process.env.NEXT_PUBLIC_CRYPTO_HASH!)
+        .createHash(process.env.CRYPTO_HASH!)
         .update(password)
         .digest('base64');
 

@@ -13,7 +13,7 @@ import FlexBox from '@/components/Box/FlexBox';
 import Button from '@/components/Button/Button';
 import TextArea from '@/components/Input/TextArea';
 import Span from '@/components/Font/Span';
-import CommentParent from '@/containers/commentAdd/CommentParent';
+import CommentParent from '@/ui/commentAdd/CommentParent';
 import { escapeMySQL } from '@/utils/mySqlUtils';
 import Spinner from '@/components/Icon/Spinner';
 

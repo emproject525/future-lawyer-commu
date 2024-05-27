@@ -47,7 +47,7 @@ const ContentsAdd: React.FC = () => {
       client.post('/contents/add', data, {
         withCredentials: true,
         headers: {
-          Authorization: getSavedAccessToken(),
+          Authorization: getSavedAccessToken(true),
         },
       }),
     onSuccess: (res) => {

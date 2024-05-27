@@ -7,7 +7,7 @@ import Pagination from '@/components/Table/Pagination';
 import styles from '@/styles/contens.module.scss';
 import FlexBox from '@/components/Box/FlexBox';
 import Span from '@/components/Font/Span';
-import Login from '@/containers/auth/Login';
+import AuthWrapper from '@/ui/auth/AuthWrapper';
 
 type PageData = {
   contents: { status: number } & IRes<IPagingList<IContentsTableRow>>;
@@ -145,11 +145,11 @@ export default async function Page({
           textAlign: 'right',
         }}
       >
-        <Login>
+        <AuthWrapper needLogin>
           <Link href="/contents/add">
             <Button>글 작성</Button>
           </Link>
-        </Login>
+        </AuthWrapper>
       </div>
       <Pagination
         page={Number(searchParams?.['page'] ?? 1)}

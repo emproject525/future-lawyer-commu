@@ -1,7 +1,7 @@
 @use 'variable';
 
 :root {
-  --foreground-rgb: #232337;
+  --foreground-rgb: rgb(35, 35, 35);
   --background-rgb: rgb(255, 255, 255);
 
   @each $name, $color in variable.$theme-color {
@@ -122,6 +122,9 @@ textarea {
   &::placeholder {
     color: #{variable.$gray-400};
   }
+}
+label {
+  padding-left: 0.5rem;
 }
 
 textarea {

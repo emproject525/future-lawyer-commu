@@ -2,11 +2,11 @@ import { createPool, RowDataPacket, ResultSetHeader } from 'mysql2';
 import { camelCase, mapKeys } from 'lodash';
 
 let pool = createPool({
-  host: process.env.NEXT_PUBLIC_DB_HOST || '',
-  user: process.env.NEXT_PUBLIC_DB_USER || '',
-  password: process.env.NEXT_PUBLIC_DB_PASSWORD || '',
-  database: process.env.NEXT_PUBLIC_DB_NAME || '',
-  port: Number(process.env.NEXT_PUBLIC_DB_PORT || 3306),
+  host: process.env.DB_HOST || '',
+  user: process.env.DB_USER || '',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || '',
+  port: Number(process.env.DB_PORT || 3306),
 });
 
 /**
@@ -30,11 +30,11 @@ const runConnectionError = (
 
   if (err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ENOTFOUND') {
     pool = createPool({
-      host: process.env.NEXT_PUBLIC_DB_HOST || '',
-      user: process.env.NEXT_PUBLIC_DB_USER || '',
-      password: process.env.NEXT_PUBLIC_DB_PASSWORD || '',
-      database: process.env.NEXT_PUBLIC_DB_NAME || '',
-      port: Number(process.env.NEXT_PUBLIC_DB_PORT || 3306),
+      host: process.env.DB_HOST || '',
+      user: process.env.DB_USER || '',
+      password: process.env.DB_PASSWORD || '',
+      database: process.env.DB_NAME || '',
+      port: Number(process.env.DB_PORT || 3306),
     });
 
     setTimeout(() => {

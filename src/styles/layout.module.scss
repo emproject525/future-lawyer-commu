@@ -1,5 +1,6 @@
 @use 'variable';
 @use 'mixin';
+@use 'sass:color';
 
 .contents {
   margin: 0 auto;
@@ -64,7 +65,7 @@
       font-weight: bold;
       font-size: 0.8rem;
       height: 100%;
-      color: #fff;
+      color: var(--foreground-rgb);
       padding: 21px 21px;
       position: relative;
       display: flex;
@@ -82,7 +83,8 @@
     &:hover a {
       text-decoration: none;
       color: #{variable.$positive};
-      background: hsla(0, 0%, 100%, 0.1);
+      // background: hsla(0, 0%, 100%, 0.1);
+      background: color.scale(rgb(35, 35, 35), $alpha: -90%);
       opacity: 1;
     }
   }

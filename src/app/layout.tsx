@@ -4,8 +4,9 @@ import localFont from 'next/font/local';
 import '@/styles/globals.scss';
 import '@/styles/thirdparty.scss';
 import styles from '@/styles/layout.module.scss';
-import Nav from '@/containers/layout/Nav';
-import Actions from '@/containers/layout/Actions';
+import Nav from '@/ui/layout/Nav';
+import Actions from '@/ui/layout/Actions';
+import AppSessionProvider from '@/ui/auth/AppSessionProvider';
 import ReactQueryProviders from '@/services/ReactQueryProviders';
 
 // const notosans = Noto_Sans_KR({
@@ -34,27 +35,32 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
+  auth,
 }: Readonly<{
   children: React.ReactNode;
+  auth: React.ReactNode;
 }>) {
   return (
     <html lang="ko">
       <body className={pretendard.className}>
-        <div className={styles.contents}>
-          <header className={styles.header}>
-            <a id="skip-nav" className={styles.skip_nav} href="#content">
-              메뉴 건너뛰기
-            </a>
-            <div className={styles.header_area}>
-              <div>HOME</div>
-              <Nav />
-              <Actions />
-            </div>
-          </header>
-          <ReactQueryProviders>
-            <div id="content">{children}</div>
-          </ReactQueryProviders>
-        </div>
+        <AppSessionProvider>
+          <div className={styles.contents}>
+            <header className={styles.header}>
+              <a id="skip-nav" className={styles.skip_nav} href="#content">
+                메뉴 건너뛰기
+              </a>
+              <div className={styles.header_area}>
+                <div>HOME</div>
+                <Nav />
+                <Actions />
+              </div>
+            </header>
+            <ReactQueryProviders>
+              <div id="content">{children}</div>
+              {auth}
+            </ReactQueryProviders>
+          </div>
+        </AppSessionProvider>
       </body>
     </html>
   );
