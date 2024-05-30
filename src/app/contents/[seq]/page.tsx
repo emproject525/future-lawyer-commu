@@ -1,5 +1,4 @@
 import { cache } from 'react';
-import { RxSlash } from 'react-icons/rx';
 import { CgMenu } from 'react-icons/cg';
 import { IoShareSocialSharp } from 'react-icons/io5';
 import { RxDividerVertical } from 'react-icons/rx';
@@ -136,12 +135,7 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
             </Button>
           </FlexBox>
           <Hr />
-          <AuthWrapper needLogin>
-            <>
-              <CommendAdd totalCommentCnt={body?.commentCnt || 0} />
-              <Hr />
-            </>
-          </AuthWrapper>
+          <CommendAdd totalCommentCnt={body?.commentCnt || 0} />
         </div>
       )}
     </main>

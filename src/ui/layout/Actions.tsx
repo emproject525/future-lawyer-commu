@@ -17,7 +17,7 @@ const Actions = () => {
         </Link>
       </AuthWrapper>
       <AuthWrapper needLogin>
-        <Link href="/signout" title="로그아웃">
+        <Link href="/signout" title="로그아웃" scroll={false}>
           <MdLogout />
         </Link>
       </AuthWrapper>

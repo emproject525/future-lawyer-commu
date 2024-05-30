@@ -1,15 +1,27 @@
 import Button from '@/components/Button/Button';
 import Form from '@/components/Input/Form';
 import Input from '@/components/Input/Input';
-// import { signIn } from 'next-auth/react';
-import { signIn } from '@/auth';
+import { signIn, unstable_update } from '@/auth';
 
-const LoginForm = () => {
+type LoginFormProps = {
+  redirectTo?: string;
+};
+
+const LoginForm: React.FC<LoginFormProps> = ({ redirectTo }) => {
   return (
     <Form
       action={async (formData) => {
         'use server';
-        await signIn('credentials', formData);
+        const session = await signIn('credentials', {
+          redirect: true,
+          redirectTo: redirectTo || '/',
+          email: formData.get('email'),
+          password: formData.get('password'),
+        });
+
+        unstable_update(session);
+
+        // redirect(redirectTo || '/', RedirectType.push);
       }}
     >
       <div className="mb-3">
@@ -19,7 +31,7 @@ const LoginForm = () => {
           id="email"
           size="lg"
           onlyBorderBottom
-          autoComplete="home email"
+          autoComplete="email"
           placeholder="email@example.com"
         />
       </div>
@@ -36,7 +48,7 @@ const LoginForm = () => {
       </div>
 
       <div className="mt-3">
-        <Button block type="submit">
+        <Button block type="submit" size="lg">
           로그인
         </Button>
       </div>

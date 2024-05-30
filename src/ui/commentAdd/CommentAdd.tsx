@@ -16,6 +16,7 @@ import Span from '@/components/Font/Span';
 import CommentParent from '@/ui/commentAdd/CommentParent';
 import { escapeMySQL } from '@/utils/mySqlUtils';
 import Spinner from '@/components/Icon/Spinner';
+import AuthWrapper from '../auth/AuthWrapper';
 
 type CommentAddProps = {
   /**
@@ -30,7 +31,7 @@ type CommentList = {
   first: number;
 };
 
-const CommentAdd = ({ totalCommentCnt }: CommentAddProps) => {
+const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
   const [body, setBody] = useState('');
   const { seq } = useParams();
   const [target, setTarget] = useState<ICommentParent[]>([]); // 렌더링 대상
@@ -152,22 +153,26 @@ const CommentAdd = ({ totalCommentCnt }: CommentAddProps) => {
         {isFetching ? <Spinner /> : <RxReload />}
         새로운 댓글 확인
       </Button>
-      <div className="my-2">
-        <TextArea
-          rows={5}
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-      </div>
-      <Button
-        block
-        flexContents
-        onClick={() => mutate(body)}
-        disabled={isPending}
-      >
-        댓글 쓰기
-        {isPending && <Spinner />}
-      </Button>
+      <AuthWrapper needLogin>
+        <>
+          <div className="my-2">
+            <TextArea
+              rows={5}
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+            />
+          </div>
+          <Button
+            block
+            flexContents
+            onClick={() => mutate(body)}
+            disabled={isPending}
+          >
+            댓글 쓰기
+            {isPending && <Spinner />}
+          </Button>
+        </>
+      </AuthWrapper>
     </div>
   );
 };

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
+import AppSessionContext from './AppSessionContext';
 
 const AuthWrapper: React.FC<
   PropsWithChildren<{
@@ -15,17 +16,33 @@ const AuthWrapper: React.FC<
     noLogin?: boolean;
   }>
 > = ({ children, needLogin, noLogin }) => {
-  const { status } = useSession();
+  return (
+    <AppSessionContext.Consumer>
+      {({ status }) => {
+        if (needLogin && status === 'authenticated') {
+          return children;
+        }
 
-  if (needLogin && status === 'authenticated') {
-    return children;
-  }
+        if (noLogin && status === 'unauthenticated') {
+          return children;
+        }
 
-  if (noLogin && status === 'unauthenticated') {
-    return children;
-  }
+        return null;
+      }}
+    </AppSessionContext.Consumer>
+  );
 
-  return null;
+  // const { status } = useSession();
+
+  // if (needLogin && status === 'authenticated') {
+  //   return children;
+  // }
+
+  // if (noLogin && status === 'unauthenticated') {
+  //   return children;
+  // }
+
+  // return null;
 };
 
 export default AuthWrapper;

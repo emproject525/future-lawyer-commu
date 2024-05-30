@@ -27,6 +27,7 @@ const providers: Provider[] = [
   GoogleProvider,
   Credentials({
     name: 'credentials',
+    type: 'credentials',
     credentials: {
       email: { label: 'email', type: 'text' },
       password: { label: 'password', type: 'password' },
@@ -65,7 +66,7 @@ export const providerMap = providers.map((provider) => {
  * @see https://medium.com/@renanleonel/how-to-set-up-nextauth-v5-authentication-with-middleware-and-jest-configuration-in-next-js-14-ca3e64bfb7d5
  */
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
   ...authConfig,
   providers,
 });

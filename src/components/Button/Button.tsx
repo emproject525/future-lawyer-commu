@@ -47,6 +47,7 @@ const Button: React.FC<ButtonProps> = ({
         [styles.button_block]: block,
         [styles.button_contents_flex]: flexContents,
         [styles.button_sm]: size === 'sm',
+        [styles.button_lg]: size === 'lg',
         [styles.button_text]: variant === 'text',
         [styles.button_disabled]: disabled,
       })}
