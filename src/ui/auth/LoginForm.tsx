@@ -1,7 +1,7 @@
 import Button from '@/components/Button/Button';
 import Form from '@/components/Input/Form';
 import Input from '@/components/Input/Input';
-import { signIn, unstable_update } from '@/auth';
+import { signIn } from '@/auth';
 
 type LoginFormProps = {
   redirectTo?: string;
@@ -12,14 +12,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ redirectTo }) => {
     <Form
       action={async (formData) => {
         'use server';
-        const session = await signIn('credentials', {
+        await signIn('credentials', {
           redirect: true,
           redirectTo: redirectTo || '/',
           email: formData.get('email'),
           password: formData.get('password'),
         });
-
-        unstable_update(session);
 
         // redirect(redirectTo || '/', RedirectType.push);
       }}

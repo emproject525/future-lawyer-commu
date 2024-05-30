@@ -6,7 +6,7 @@ import '@/styles/thirdparty.scss';
 import styles from '@/styles/layout.module.scss';
 import Nav from '@/ui/layout/Nav';
 import Actions from '@/ui/layout/Actions';
-import SessionProvider from '@/ui/auth/AppSessionProvider';
+// import SessionProvider from '@/ui/auth/AppSessionProvider';
 import { AppSessionProvider } from '@/ui/auth/AppSessionContext';
 import ReactQueryProviders from '@/services/ReactQueryProviders';
 
@@ -44,26 +44,25 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={pretendard.className}>
-        <SessionProvider>
-          <AppSessionProvider>
-            <div className={styles.contents}>
-              <header className={styles.header}>
-                <a id="skip-nav" className={styles.skip_nav} href="#content">
-                  메뉴 건너뛰기
-                </a>
-                <div className={styles.header_area}>
-                  <div>HOME</div>
-                  <Nav />
-                  <Actions />
-                </div>
-              </header>
-              <ReactQueryProviders>
-                <div id="content">{children}</div>
-                {auth}
-              </ReactQueryProviders>
-            </div>
-          </AppSessionProvider>
-        </SessionProvider>
+        {/* <SessionProvider>  </SessionProvider> */}
+        <AppSessionProvider>
+          <div className={styles.contents}>
+            <header className={styles.header}>
+              <a id="skip-nav" className={styles.skip_nav} href="#content">
+                메뉴 건너뛰기
+              </a>
+              <div className={styles.header_area}>
+                <div>HOME</div>
+                <Nav />
+                <Actions />
+              </div>
+            </header>
+            <ReactQueryProviders>
+              <div id="content">{children}</div>
+              {auth}
+            </ReactQueryProviders>
+          </div>
+        </AppSessionProvider>
       </body>
     </html>
   );
