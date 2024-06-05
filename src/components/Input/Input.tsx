@@ -14,10 +14,7 @@ export type InputProps = {
   size?: 'sm' | 'md' | 'lg';
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'disabled' | 'size'>;
 
-const Input: React.FC<InputProps> = React.forwardRef<
-  HTMLInputElement,
-  InputProps
->((props, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { error, disabled, size, onlyBorderBottom, ...rest } = props;
 
   return (

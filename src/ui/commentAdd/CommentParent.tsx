@@ -14,6 +14,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import styles from '@/styles/contens.module.scss';
 import { escapeMySQL } from '@/utils/mySqlUtils';
 import Hr from '@/components/Hr/Hr';
+import AppSessionContext from '../auth/AppSessionContext';
 
 export type CommentParentProps = {
   /**
@@ -54,13 +55,29 @@ const CommentParent = ({
   });
 
   // 답글 등록
-  const addReply = useMutation<IRes<boolean>, AxiosError, string>({
-    mutationFn: (body) =>
+  const addReply = useMutation<
+    IRes<boolean>,
+    AxiosError,
+    {
+      body: string;
+      token: string;
+    }
+  >({
+    mutationFn: ({ body, token }) =>
       client
-        .post(`/comment/${seq}`, {
-          body: escapeMySQL(body),
-          parentSeq: seq,
-        })
+        .post(
+          `/comment/${seq}`,
+          {
+            body: escapeMySQL(body),
+            parentSeq: seq,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
         .then((res) => res.data),
     onSuccess: (res) => {
       if (res.header.success && res.body) {
@@ -80,95 +97,106 @@ const CommentParent = ({
   );
 
   return (
-    <Comment body={body} regDt={regDt.slice(0, 16)} title={title}>
-      <FlexBox
-        className="mt-1"
-        style={{
-          columnGap: '0.5em',
-        }}
-      >
-        <Button
-          size="sm"
-          variant="text"
-          color="info"
-          flexContents
-          style={{
-            gap: 2,
-          }}
-          onClick={() => {
-            setOpenReply((b) => !b);
-            refetch();
-          }}
-          disabled={cnt === 0}
-        >
-          답글 {cnt}개{' '}
-          <IoIosArrowDown
+    <AppSessionContext.Consumer>
+      {({ data: authData }) => (
+        <Comment body={body} regDt={regDt.slice(0, 16)} title={title}>
+          <FlexBox
+            className="mt-1"
             style={{
-              width: 14,
-              height: 14,
-            }}
-            className={clsx({
-              [styles.rotate_0]: !openReply,
-              [styles.rotate_180]: openReply,
-            })}
-          />
-        </Button>
-        {delYn === 'N' && (
-          <Button
-            size="sm"
-            variant="text"
-            onClick={() => {
-              setOpenReplyForm(true);
-              inputRef.current?.focus();
+              columnGap: '0.5em',
             }}
           >
-            답글
-          </Button>
-        )}
-        {openReplyForm && (
-          <>
             <Button
               size="sm"
               variant="text"
-              onClick={() => setOpenReplyForm(false)}
+              color="info"
+              flexContents
+              style={{
+                gap: 2,
+              }}
+              onClick={() => {
+                setOpenReply((b) => !b);
+                refetch();
+              }}
+              disabled={cnt === 0}
             >
-              취소
+              답글 {cnt}개{' '}
+              <IoIosArrowDown
+                style={{
+                  width: 14,
+                  height: 14,
+                }}
+                className={clsx({
+                  [styles.rotate_0]: !openReply,
+                  [styles.rotate_180]: openReply,
+                })}
+              />
             </Button>
-            <Button
-              size="sm"
-              variant="text"
-              onClick={() => addReply.mutate(replyBody)}
-              color="success"
-            >
-              저장
-            </Button>
-          </>
-        )}
-      </FlexBox>
-      {openReplyForm && (
-        <div className="mt-1">
-          <Input
-            ref={inputCallback}
-            placeholder="답글 추가"
-            value={replyBody}
-            onChange={(e) => setReplyBody(e.target.value)}
-          />
-        </div>
+            {delYn === 'N' && (
+              <Button
+                size="sm"
+                variant="text"
+                onClick={() => {
+                  setOpenReplyForm(true);
+                  inputRef.current?.focus();
+                }}
+              >
+                답글
+              </Button>
+            )}
+            {openReplyForm && (
+              <>
+                <Button
+                  size="sm"
+                  variant="text"
+                  onClick={() => setOpenReplyForm(false)}
+                >
+                  취소
+                </Button>
+                <Button
+                  size="sm"
+                  variant="text"
+                  onClick={() => {
+                    if (authData?.user.accessToken) {
+                      addReply.mutate({
+                        body: replyBody,
+                        token: authData?.user.accessToken,
+                      });
+                    }
+                  }}
+                  color="success"
+                >
+                  저장
+                </Button>
+              </>
+            )}
+          </FlexBox>
+          {openReplyForm && (
+            <div className="mt-1">
+              <Input
+                ref={inputCallback}
+                placeholder="답글 추가"
+                value={replyBody}
+                onChange={(e) => setReplyBody(e.target.value)}
+              />
+            </div>
+          )}
+          {openReply && (
+            <div data-desc={`comment-${seq}-reply`} className="mt-1 pl-2">
+              {data.map((item, idx) => (
+                <Comment
+                  key={`reply-${item.seq}`}
+                  title={`답글 ${idx + 1}`}
+                  regDt={item.regDt}
+                  body={item.body}
+                />
+              ))}
+            </div>
+          )}
+          <Hr />
+        </Comment>
       )}
-      {openReply && (
-        <div data-desc={`comment-${seq}-reply`} className="mt-1 pl-2">
-          {data.map((item, idx) => (
-            <Comment
-              key={`reply-${item.seq}`}
-              title={`답글 ${idx + 1}`}
-              regDt={item.regDt}
-              body={item.body}
-            />
-          ))}
-        </div>
-      )}
-      <Hr />
-    </Comment>
+    </AppSessionContext.Consumer>
   );
 };
 

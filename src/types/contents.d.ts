@@ -46,6 +46,8 @@ export interface IContentsTableRow {
   regDt: string;
   // 카테고리의 sub_name
   subName: string;
+  // 코멘트수
+  commentCnt: number;
 }
 
 /**

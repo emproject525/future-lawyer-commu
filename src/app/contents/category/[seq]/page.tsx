@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { RxDividerVertical } from 'react-icons/rx';
 import Button from '@/components/Button/Button';
 import { IContentsTableRow, IPagingList, IRes, ICategory } from '@/types';
-import Table from '@/components/Table/Table';
+import ContensTable from '@/components/Table/ContentsTable';
 import Pagination from '@/components/Table/Pagination';
 import styles from '@/styles/contens.module.scss';
 import FlexBox from '@/components/Box/FlexBox';
@@ -110,34 +110,7 @@ export default async function Page({
       </FlexBox>
       <div data-desc="list" className="mb-1">
         {contents.status === 200 && contents.header.success && (
-          <Table<IContentsTableRow>
-            fields={[
-              {
-                headerName: '번호',
-                field: 'seq',
-                width: '60px',
-              },
-              {
-                headerName: '카테고리',
-                field: 'subName',
-                ui: 'small',
-                width: '80px',
-              },
-              {
-                headerName: '제목',
-                field: 'title',
-                ui: 'link',
-                path: '/contents',
-              },
-              {
-                headerName: '날짜',
-                field: 'regDt',
-                width: '60px',
-              },
-            ]}
-            idField="seq"
-            rowDatas={contents.body.list}
-          />
+          <ContensTable rowDatas={contents.body.list} />
         )}
       </div>
       <div

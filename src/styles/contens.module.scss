@@ -64,6 +64,26 @@
       text-decoration: underline;
     }
   }
+
+  blockquote {
+    border-left: 4px solid #ccc;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+  }
+
+  pre {
+    font-family: Consolas, monaco, monospace;
+    font-size: 0.8em;
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: visible;
+    white-space: pre-wrap;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
 }
 
 .horizon {

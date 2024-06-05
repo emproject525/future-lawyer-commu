@@ -16,6 +16,7 @@ import Span from '@/components/Font/Span';
 import CommentParent from '@/ui/commentAdd/CommentParent';
 import { escapeMySQL } from '@/utils/mySqlUtils';
 import Spinner from '@/components/Icon/Spinner';
+import AppSessionContext from '../auth/AppSessionContext';
 import AuthWrapper from '../auth/AuthWrapper';
 
 type CommentAddProps = {
@@ -82,11 +83,27 @@ const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
   }, [data.list, isFetched]);
 
   // 댓글 등록
-  const { mutate, isPending } = useMutation<IRes<boolean>, AxiosError, string>({
+  const { mutate, isPending } = useMutation<
+    IRes<boolean>,
+    AxiosError,
+    {
+      body: string;
+      token: string;
+    }
+  >({
     mutationKey: [target],
-    mutationFn: (body) =>
+    mutationFn: ({ body, token }) =>
       client
-        .post(`/comment/${seq}`, { body: escapeMySQL(body) })
+        .post(
+          `/comment/${seq}`,
+          { body: escapeMySQL(body) },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
         .then((res) => res.data),
     onSuccess: (res) => {
       if (res.header.success) {
@@ -105,75 +122,86 @@ const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
   );
 
   return (
-    <div data-desc="comment">
-      <FlexBox
-        row
-        style={{
-          columnGap: '0.5em',
-        }}
-      >
-        <FaRegCommentAlt />
-        <Span>댓글</Span>
-        <Span color="info">{cnt}</Span>
-      </FlexBox>
-      <div className="my-2">
-        {(target[0]?.seq ?? -1) > data.first && (
-          <Button
-            block
-            flexContents
-            color="gray-200"
-            onClick={() => setP({ p: data.list[0]!.seq, n: -1 })}
+    <AppSessionContext.Consumer>
+      {({ data: authData }) => (
+        <div data-desc="comment">
+          <FlexBox
+            row
+            style={{
+              columnGap: '0.5em',
+            }}
           >
-            {isFetching ? <Spinner /> : <IoArrowUpOutline />}
-            이전 댓글 확인
-          </Button>
-        )}
-      </div>
-      <div className="my-2">
-        {target.map((commentItem, idx) => (
-          <CommentParent
-            key={`comment-${seq}-${commentItem.seq}`}
-            title={`익명 ${cnt - (target.length - idx) + 1}`}
-            {...commentItem}
-          />
-        ))}
-      </div>
-      <Button
-        block
-        flexContents
-        onClick={() => {
-          setP({
-            p: -1,
-            n: target.slice(-1)?.[0]?.seq || -1,
-          });
-          refetch();
-        }}
-        color="gray-200"
-      >
-        {isFetching ? <Spinner /> : <RxReload />}
-        새로운 댓글 확인
-      </Button>
-      <AuthWrapper needLogin>
-        <>
+            <FaRegCommentAlt />
+            <Span>댓글</Span>
+            <Span color="info">{cnt}</Span>
+          </FlexBox>
           <div className="my-2">
-            <TextArea
-              rows={5}
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-            />
+            {(target[0]?.seq ?? -1) > data.first && (
+              <Button
+                block
+                flexContents
+                color="gray-200"
+                onClick={() => setP({ p: data.list[0]!.seq, n: -1 })}
+              >
+                {isFetching ? <Spinner /> : <IoArrowUpOutline />}
+                이전 댓글 확인
+              </Button>
+            )}
+          </div>
+          <div className="my-2">
+            {target.map((commentItem, idx) => (
+              <CommentParent
+                key={`comment-${seq}-${commentItem.seq}`}
+                title={`익명 ${cnt - (target.length - idx) + 1}`}
+                {...commentItem}
+              />
+            ))}
           </div>
           <Button
             block
             flexContents
-            onClick={() => mutate(body)}
-            disabled={isPending}
+            onClick={() => {
+              setP({
+                p: -1,
+                n: target.slice(-1)?.[0]?.seq || -1,
+              });
+              refetch();
+            }}
+            color="gray-200"
           >
-            댓글 쓰기
-            {isPending && <Spinner />}
+            {isFetching ? <Spinner /> : <RxReload />}
+            새로운 댓글 확인
           </Button>
-        </>
-      </AuthWrapper>
-    </div>
+          <AuthWrapper needLogin>
+            <>
+              <div className="my-2">
+                <TextArea
+                  rows={5}
+                  value={body}
+                  onChange={(e) => setBody(e.target.value)}
+                />
+              </div>
+              <Button
+                block
+                flexContents
+                onClick={() => {
+                  if (authData?.user.accessToken) {
+                    mutate({
+                      body,
+                      token: authData?.user.accessToken,
+                    });
+                  }
+                }}
+                disabled={isPending}
+              >
+                댓글 쓰기
+                {isPending && <Spinner />}
+              </Button>
+            </>
+          </AuthWrapper>
+        </div>
+      )}
+    </AppSessionContext.Consumer>
   );
 };
 

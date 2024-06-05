@@ -32,15 +32,15 @@ export async function GET(req: Request) {
     .join('');
 
   await select<IContentsTableRow>(
-    `select c.seq, c.title,
+    `select c.seq, c.title, (select count(*) from comment where comment.contents_seq = c.seq && comment.parent_seq is NULL) as comment_cnt,
     case 
       when DATE(c.reg_dt) = CURDATE()
       then DATE_FORMAT(c.reg_dt, '%H:%i')
       else DATE_FORMAT(c.reg_dt, '%m-%d') end as reg_dt,
     cate.sub_name as sub_name
-    from contents c inner join contents_category cate
-    on c.category_seq = cate.seq ${wherePhrase}
-    order by seq desc 
+    from contents c
+    inner join contents_category cate on c.category_seq = cate.seq ${wherePhrase}
+    order by c.seq desc 
     limit ${(paramPage - 1) * paramCount}, ${paramCount};`,
   ).then((res) => {
     success = true;

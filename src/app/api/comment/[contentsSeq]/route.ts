@@ -1,6 +1,10 @@
 import { NextRequest } from 'next/server';
 import execute, { select } from '@/db/pool';
 import { ICommentParent } from '@/types';
+import { catchRouteError, getCredentialsHeaders } from '@/utils';
+import { AuthError } from 'next-auth';
+import { QueryError } from 'mysql2';
+import { auth } from '@/auth';
 
 /**
  * `OPTIONS`
@@ -10,7 +14,7 @@ export async function OPTIONS(req: Request) {
 }
 
 /**
- * `GET` 특정 컨텐츠의 댓글 목록
+ * `GET` 컨텐츠의 `댓글` 목록 조회
  */
 export async function GET(
   req: NextRequest,
@@ -85,36 +89,64 @@ export async function GET(
 }
 
 /**
- * `POST` 특정 컨텐츠에 댓글 추가
- * - 답글 등록
+ * `POST` 컨텐츠에 `댓글`/`답글` 등록
+ * - parentSeq 있으면 답글 등록
+ * - Credentials
+ * @param req NextRequest
+ * @param param1
+ * @returns Response
  */
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { contentsSeq: number } },
-) {
-  const payload: {
-    body: string;
-    parentSeq?: number;
-  } = await req.json();
-
+export const POST = auth(async (req, ctx) => {
+  let message = '';
+  let status = 200;
   let success = false;
 
-  await execute(
-    `insert into comment(contents_seq, user_seq, reg_dt, body, parent_seq) values (${params.contentsSeq}, 1, now(6), '${payload.body ?? ''}', ${payload.parentSeq ?? null});`,
-  ).then(
-    () => {
-      success = true;
-    },
-    () => {
-      success = false;
-    },
-  );
+  const headers = getCredentialsHeaders();
 
-  return Response.json({
-    header: {
-      status: 200,
-      success,
-    },
-    body: success,
-  });
-}
+  try {
+    const payload: {
+      body: string;
+      parentSeq?: number;
+    } = await req.json();
+
+    if (!req.auth) throw new AuthError();
+
+    const contentsSeq = ctx.params?.contentsSeq;
+
+    await execute(
+      `insert into comment(contents_seq, user_seq, reg_dt, body, parent_seq) values (${contentsSeq}, ${req.auth.user.seq}, now(6), '${payload.body ?? ''}', ${payload.parentSeq ?? null});`,
+    ).then(
+      () => {
+        success = true;
+      },
+      (err: QueryError | string | null) => {
+        success = false;
+
+        if (typeof err === 'string') {
+          message = err;
+        } else if (err) {
+          message = err.message;
+        }
+      },
+    );
+  } catch (e) {
+    const info = catchRouteError(e);
+    success = info.success;
+    status = info.status;
+    message = info.message;
+  } finally {
+    return Response.json(
+      {
+        header: {
+          status,
+          success,
+          message,
+        },
+        body: success,
+      },
+      {
+        headers,
+      },
+    );
+  }
+});

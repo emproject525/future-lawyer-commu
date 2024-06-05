@@ -13,7 +13,7 @@ export async function GET(
 
   await select<IContentsDetail>(
     `select 
-    contents.seq, contents.title, contents.user_seq,
+    contents.seq, contents.title, contents.user_seq, contents.category_seq,
     DATE_FORMAT(contents.reg_dt, '%Y-%m-%d %H:%i') as reg_dt,
     DATE_FORMAT(contents.mod_dt, '%Y-%m-%d %H:%i') as mod_dt,
     contents_category.main_name as main_name,

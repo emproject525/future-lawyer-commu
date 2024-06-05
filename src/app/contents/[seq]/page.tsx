@@ -1,5 +1,7 @@
 import { cache } from 'react';
 import { CgMenu } from 'react-icons/cg';
+import { CiEdit } from 'react-icons/ci';
+import { MdOutlineDelete } from 'react-icons/md';
 import { IoShareSocialSharp } from 'react-icons/io5';
 import { RxDividerVertical } from 'react-icons/rx';
 import clsx from 'clsx';
@@ -14,7 +16,7 @@ import FlexBox from '@/components/Box/FlexBox';
 import CommendAdd from '@/ui/commentAdd';
 import AuthWrapper from '@/ui/auth/AuthWrapper';
 
-type PageData = {
+export type PageData = {
   status: number;
 } & IRes<IContentsDetail, true>;
 
@@ -133,6 +135,20 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
               <IoShareSocialSharp />
               공유
             </Button>
+            <AuthWrapper userSeq={body?.userSeq}>
+              <Link href={`/contents/${body?.seq}/edit`}>
+                <Button flexContents variant="outlined" color="gray-200">
+                  <CiEdit />
+                  수정
+                </Button>
+              </Link>
+            </AuthWrapper>
+            <AuthWrapper userSeq={body?.userSeq}>
+              <Button flexContents variant="outlined" color="gray-200">
+                <MdOutlineDelete />
+                삭제
+              </Button>
+            </AuthWrapper>
           </FlexBox>
           <Hr />
           <CommendAdd totalCommentCnt={body?.commentCnt || 0} />

@@ -7,6 +7,12 @@ import crypto from 'crypto';
 import { IUser } from './types';
 import { select } from './db/pool';
 
+declare module 'next-auth' {
+  interface Session {
+    user: IUser;
+  }
+}
+
 async function getUser(email: string, password: string): Promise<IUser> {
   const encryption = crypto
     .createHash(process.env.CRYPTO_HASH!)
