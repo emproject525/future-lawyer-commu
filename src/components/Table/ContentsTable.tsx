@@ -90,7 +90,15 @@ const ContensTable = ({ rowDatas }: ContentsTableProps) => {
                     }}
                   >
                     <Link href={[column.path || '', row.seq || ''].join('/')}>
-                      {item} <Span color="info">({row.commentCnt || 0})</Span>
+                      {item}
+                    </Link>
+                    <Link
+                      className="ml-1"
+                      href={[column.path || '', row.seq || '', '#comment'].join(
+                        '/',
+                      )}
+                    >
+                      <Span color="info">({row.commentCnt || 0})</Span>
                     </Link>
                   </td>
                 );

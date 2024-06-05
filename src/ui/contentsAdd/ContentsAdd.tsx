@@ -187,7 +187,7 @@ const ContentsAdd: React.FC<ContentsAddProps> = ({
                 }
               }}
             >
-              게시글 등록
+              게시글 {editMode ? '수정' : '등록'}
               {isPending && <Spinner />}
             </Button>
           </FlexBox>

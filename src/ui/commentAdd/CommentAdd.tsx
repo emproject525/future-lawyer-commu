@@ -108,10 +108,11 @@ const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
     onSuccess: (res) => {
       if (res.header.success) {
         setBody('');
-        setP({
-          p: -1,
-          n: target.slice(-1)?.[0]?.seq || -1,
-        });
+        // setP({
+        //   p: -1,
+        //   n: target.slice(-1)?.[0]?.seq || -1,
+        // });
+        refetch();
       }
     },
   });
@@ -124,7 +125,7 @@ const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
   return (
     <AppSessionContext.Consumer>
       {({ data: authData }) => (
-        <div data-desc="comment">
+        <div data-desc="comment" id="comment">
           <FlexBox
             row
             style={{
@@ -153,6 +154,7 @@ const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
               <CommentParent
                 key={`comment-${seq}-${commentItem.seq}`}
                 title={`익명 ${cnt - (target.length - idx) + 1}`}
+                isLast={target.length === idx + 1}
                 {...commentItem}
               />
             ))}

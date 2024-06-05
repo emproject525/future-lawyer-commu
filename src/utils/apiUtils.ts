@@ -19,7 +19,7 @@ export const catchRouteError = (e: unknown) => {
   let message = API_ERR_MSG_DEFAULT;
 
   if (e instanceof AuthError) {
-    status = 400;
+    status = 401;
     message = e.message;
   } else {
     message = typeof e === 'string' ? e : API_ERR_MSG_DEFAULT;
@@ -38,10 +38,12 @@ export const catchRouteError = (e: unknown) => {
  */
 export const getCredentialsHeaders = () => {
   const headers = new Headers();
+
   headers.set(
     'Access-Control-Allow-Origin',
     process.env.NEXT_PUBLIC_SITE_DOMAIN!,
   );
   headers.set('Access-Control-Allow-Credentials', 'true');
+
   return headers;
 };

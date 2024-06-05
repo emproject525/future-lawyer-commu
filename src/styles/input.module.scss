@@ -7,18 +7,19 @@
   padding-right: #{variable.$gap};
   border-width: 1px;
   border-style: solid;
-  border-color: light-dark(
-    #{variable.$gray-300},
-    lighten(variable.$gray-300, 10%)
-  );
+  // border-color: light-dark(
+  //   #{variable.$gray-300},
+  //   lighten(variable.$gray-300, 10%)
+  // );
+  border-color: var(--gray-300-hex);
   outline: none;
   width: 100%;
 
   &:focus:not(:disabled),
   &:active:not(:disabled) {
     transition: none 0s ease 0s;
-    box-shadow: 0 0 0 1px #{variable.$gray-300};
-    border-color: #{variable.$gray-300};
+    box-shadow: 0 0 0 1px var(--gray-300-hex);
+    border-color: var(--gray-300-hex);
   }
 }
 
@@ -29,20 +30,21 @@
 
 .input_border_bottom {
   border: 0px;
-  border-bottom: 1px solid
-    light-dark(#{variable.$gray-300}, lighten(variable.$gray-300, 10%));
+  // border-bottom: 1px solid
+  //   light-dark(#{variable.$gray-300}, lighten(variable.$gray-300, 10%));
+  border-bottom: 1px solid var(--gray-300-hex);
   background-color: inherit;
 
   &:focus:not(:disabled),
   &:active:not(:disabled) {
     // box-shadow: initial;
-    box-shadow: inset 0 -1px 0 0 #{variable.$gray-300};
+    box-shadow: inset 0 -1px 0 0 var(--gray-300-hex);
   }
 }
 
 .input_disabled {
   user-select: none;
-  background-color: #{variable.$gray-300};
+  background-color: var(--gray-300-hex);
 }
 
 .input_error {
@@ -64,4 +66,5 @@
 .select {
   font-family: inherit;
   padding: 0.3em 1.2em 0.3em 0.5em;
+  border-color: var(--gray-300-hex);
 }

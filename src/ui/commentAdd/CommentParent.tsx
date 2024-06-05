@@ -21,6 +21,7 @@ export type CommentParentProps = {
    * 작성자 (익명 N)
    */
   title: string;
+  isLast?: boolean;
 } & Pick<ICommentParent, 'seq' | 'regDt' | 'body' | 'replyCnt' | 'delYn'>;
 
 /**
@@ -33,6 +34,7 @@ const CommentParent = ({
   replyCnt,
   seq,
   delYn,
+  isLast,
 }: CommentParentProps) => {
   const [replyBody, setReplyBody] = useState('');
   const [openReply, setOpenReply] = useState(false);
@@ -193,7 +195,7 @@ const CommentParent = ({
               ))}
             </div>
           )}
-          <Hr />
+          {!isLast && <Hr />}
         </Comment>
       )}
     </AppSessionContext.Consumer>
