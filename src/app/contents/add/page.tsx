@@ -1,7 +1,7 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import dynamic from 'next/dynamic';
 
-const ContentsAdd = dynamic(() => import('@/ui/contentsAdd'), {
+const ContentsForm = dynamic(() => import('@/ui/contents'), {
   ssr: false,
 });
 
@@ -39,7 +39,7 @@ export default function Page() {
         height: 'calc(100vh - 65px)',
       }}
     >
-      <ContentsAdd />
+      <ContentsForm />
     </main>
   );
 }

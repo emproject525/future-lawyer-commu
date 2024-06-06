@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import AuthWrapper from '@/ui/auth/AuthWrapper';
 import { PageData } from '../page';
 
-const ContentsAdd = dynamic(() => import('@/ui/contentsAdd'), {
+const ContentsForm = dynamic(() => import('@/ui/contents'), {
   ssr: false,
 });
 
@@ -46,8 +46,9 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
     >
       {status === 200 && header.success && (
         <AuthWrapper userSeq={body?.userSeq}>
-          <ContentsAdd
+          <ContentsForm
             editMode
+            orgSeq={body?.seq}
             orgTitle={body?.title}
             orgBody={body?.body}
             orgCategorySeq={body?.categorySeq}

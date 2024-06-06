@@ -1,7 +1,6 @@
 import { cache } from 'react';
 import { CgMenu } from 'react-icons/cg';
 import { CiEdit } from 'react-icons/ci';
-import { MdOutlineDelete } from 'react-icons/md';
 import { IoShareSocialSharp } from 'react-icons/io5';
 import { RxDividerVertical } from 'react-icons/rx';
 import clsx from 'clsx';
@@ -15,6 +14,7 @@ import Hr from '@/components/Hr/Hr';
 import FlexBox from '@/components/Box/FlexBox';
 import CommendAdd from '@/ui/commentAdd';
 import AuthWrapper from '@/ui/auth/AuthWrapper';
+import DeleteButton from '@/ui/contents/DeleteButton';
 
 export type PageData = {
   status: number;
@@ -79,7 +79,7 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
 
   return (
     <main>
-      {status === 200 && header.success && (
+      {status === 200 && header.success && body && (
         <div data-desc="detail">
           <FlexBox
             className={clsx(styles.breadcrumb, 'mb-1')}
@@ -100,6 +100,12 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
             }}
           >
             <Span>{body?.regDt || ''}</Span>
+            {body?.modDt && (
+              <>
+                <RxDividerVertical />
+                <Span>{body?.modDt || ''} (수정)</Span>
+              </>
+            )}
             <RxDividerVertical />
             <Span>조회수</Span>
             <Span color="info">0</Span>
@@ -144,10 +150,7 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
               </Link>
             </AuthWrapper>
             <AuthWrapper userSeq={body?.userSeq}>
-              <Button flexContents variant="outlined" color="gray-200">
-                <MdOutlineDelete />
-                삭제
-              </Button>
+              <DeleteButton seq={body?.seq} />
             </AuthWrapper>
           </FlexBox>
           <Hr />

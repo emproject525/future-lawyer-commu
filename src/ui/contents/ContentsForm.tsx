@@ -15,19 +15,22 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { escapeMySQL } from '@/utils/mySqlUtils';
 import AppSessionContext from '../auth/AppSessionContext';
 
-type ContentsAddProps = {
+type ContentsFormProps = {
   editMode?: boolean;
+  orgSeq?: number;
   orgTitle?: string;
   orgBody?: string;
   orgCategorySeq?: number;
 };
 
 /**
- * app > contents > add > page
+ * - app > contents > add > page
+ * - app > contents > [seq] > edit > page
  * @returns
  */
-const ContentsAdd: React.FC<ContentsAddProps> = ({
+const ContentsForm: React.FC<ContentsFormProps> = ({
   editMode,
+  orgSeq,
   orgBody,
   orgCategorySeq,
   orgTitle,
@@ -39,12 +42,10 @@ const ContentsAdd: React.FC<ContentsAddProps> = ({
   const { data: categories, isFetched } = useQuery<ICategory[]>({
     queryKey: ['category'],
     queryFn: () =>
-      client
-        .get<IRes<IPagingList<ICategory>>>(`http://localhost:3000/api/category`)
-        .then((res) => {
-          setCategory(res.data.body.list?.[0]);
-          return res.data.body.list;
-        }),
+      client.get<IRes<IPagingList<ICategory>>>(`/category`).then((res) => {
+        setCategory(res.data.body.list?.[0]);
+        return res.data.body.list;
+      }),
   });
   const { mutate, isPending } = useMutation<
     AxiosResponse<IRes<boolean>>,
@@ -56,9 +57,10 @@ const ContentsAdd: React.FC<ContentsAddProps> = ({
       token: string;
     }
   >({
+    mutationKey: [editMode, orgSeq],
     mutationFn: ({ title, body, categorySeq, token }) =>
       client.post(
-        '/contents/add',
+        editMode ? `/contents/${orgSeq}` : '/contents',
         {
           title,
           body,
@@ -73,10 +75,10 @@ const ContentsAdd: React.FC<ContentsAddProps> = ({
       ),
     onSuccess: (res) => {
       if (res.status === 200 && res.data.header.success) {
-        alert('게시글을 등록하였습니다.');
+        alert('게시글을 저장하였습니다.');
         router.push('/contents');
       } else {
-        alert('작성 실패');
+        alert('저장 실패');
       }
     },
   });
@@ -197,4 +199,4 @@ const ContentsAdd: React.FC<ContentsAddProps> = ({
   );
 };
 
-export default ContentsAdd;
+export default ContentsForm;
