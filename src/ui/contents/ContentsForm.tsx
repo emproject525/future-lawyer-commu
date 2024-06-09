@@ -42,10 +42,9 @@ const ContentsForm: React.FC<ContentsFormProps> = ({
   const { data: categories, isFetched } = useQuery<ICategory[]>({
     queryKey: ['category'],
     queryFn: () =>
-      client.get<IRes<IPagingList<ICategory>>>(`/category`).then((res) => {
-        setCategory(res.data.body.list?.[0]);
-        return res.data.body.list;
-      }),
+      client
+        .get<IRes<IPagingList<ICategory>>>(`/category`)
+        .then((res) => res.data.body.list),
   });
   const { mutate, isPending } = useMutation<
     AxiosResponse<IRes<boolean>>,
@@ -101,6 +100,8 @@ const ContentsForm: React.FC<ContentsFormProps> = ({
       setTitle(orgTitle || '');
       setBody(orgBody || '');
       setCategory(categories?.find((i) => i.seq === orgCategorySeq));
+    } else {
+      setCategory(categories?.[0]);
     }
   }, [categories, editMode, orgBody, orgCategorySeq, orgTitle]);
 

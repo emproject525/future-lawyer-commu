@@ -7,6 +7,11 @@ type LoginFormProps = {
   redirectTo?: string;
 };
 
+/**
+ * 이메일 / PW 입력폼
+ * @param param0
+ * @returns React.FC
+ */
 const LoginForm: React.FC<LoginFormProps> = ({ redirectTo }) => {
   return (
     <Form

@@ -1,3 +1,9 @@
+import TypingBackground from '@/ui/typing/TypingBackground';
+
 export default async function Page() {
-  return <main>TEST</main>;
+  return (
+    <main>
+      <TypingBackground />
+    </main>
+  );
 }
