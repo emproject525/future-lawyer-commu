@@ -48,6 +48,7 @@ const RAW_RUNTIME_STATE =
           ["@types/qs", "npm:6.9.15"],\
           ["@types/react", "npm:18.2.79"],\
           ["@types/react-dom", "npm:18.2.25"],\
+          ["@types/react-highlight-words", "npm:0.20.0"],\
           ["axios", "npm:1.6.8"],\
           ["clsx", "npm:2.1.1"],\
           ["eslint", "npm:8.57.0"],\
@@ -65,6 +66,7 @@ const RAW_RUNTIME_STATE =
           ["qs", "npm:6.12.1"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:50806adc1a15ac3203587e8f275c2309094d4a8459c7bc11165b390f7b65859c9d86ca51d7d9dc33ba9cdd5f7e51bfc75078ff13f9aea9ccf0b5637764d70c45#npm:18.2.0"],\
+          ["react-highlight-words", "virtual:2201d61b5aa40b5edc493fd271fdb748a4088a5bff1bcc482561c184684b1fd9eb1c36c67ffdb070ec0b2c8a6161ed6ea9542d1351a21d919f3db490931e6006#npm:0.20.0"],\
           ["react-icons", "virtual:2201d61b5aa40b5edc493fd271fdb748a4088a5bff1bcc482561c184684b1fd9eb1c36c67ffdb070ec0b2c8a6161ed6ea9542d1351a21d919f3db490931e6006#npm:5.2.0"],\
           ["react-quill", "virtual:2201d61b5aa40b5edc493fd271fdb748a4088a5bff1bcc482561c184684b1fd9eb1c36c67ffdb070ec0b2c8a6161ed6ea9542d1351a21d919f3db490931e6006#npm:2.0.0"],\
           ["sass", "npm:1.75.0"],\
@@ -6874,6 +6876,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/react-highlight-words", [\
+      ["npm:0.20.0", {\
+        "packageLocation": "./.yarn/cache/@types-react-highlight-words-npm-0.20.0-d96749090f-95d268fc24.zip/node_modules/@types/react-highlight-words/",\
+        "packageDependencies": [\
+          ["@types/react-highlight-words", "npm:0.20.0"],\
+          ["@types/react", "npm:18.2.79"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/resolve", [\
       ["npm:1.20.6", {\
         "packageLocation": "./.yarn/cache/@types-resolve-npm-1.20.6-6ab126a04b-a9b0549d81.zip/node_modules/@types/resolve/",\
@@ -12307,6 +12319,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["highlight-words-core", [\
+      ["npm:1.2.2", {\
+        "packageLocation": "./.yarn/cache/highlight-words-core-npm-1.2.2-b168c62a9a-36a2a93d48.zip/node_modules/highlight-words-core/",\
+        "packageDependencies": [\
+          ["highlight-words-core", "npm:1.2.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["hmac-drbg", [\
       ["npm:1.0.1", {\
         "packageLocation": "./.yarn/cache/hmac-drbg-npm-1.0.1-3499ad31cd-f3d9ba31b4.zip/node_modules/hmac-drbg/",\
@@ -14275,6 +14296,7 @@ const RAW_RUNTIME_STATE =
           ["@types/qs", "npm:6.9.15"],\
           ["@types/react", "npm:18.2.79"],\
           ["@types/react-dom", "npm:18.2.25"],\
+          ["@types/react-highlight-words", "npm:0.20.0"],\
           ["axios", "npm:1.6.8"],\
           ["clsx", "npm:2.1.1"],\
           ["eslint", "npm:8.57.0"],\
@@ -14292,6 +14314,7 @@ const RAW_RUNTIME_STATE =
           ["qs", "npm:6.12.1"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:50806adc1a15ac3203587e8f275c2309094d4a8459c7bc11165b390f7b65859c9d86ca51d7d9dc33ba9cdd5f7e51bfc75078ff13f9aea9ccf0b5637764d70c45#npm:18.2.0"],\
+          ["react-highlight-words", "virtual:2201d61b5aa40b5edc493fd271fdb748a4088a5bff1bcc482561c184684b1fd9eb1c36c67ffdb070ec0b2c8a6161ed6ea9542d1351a21d919f3db490931e6006#npm:0.20.0"],\
           ["react-icons", "virtual:2201d61b5aa40b5edc493fd271fdb748a4088a5bff1bcc482561c184684b1fd9eb1c36c67ffdb070ec0b2c8a6161ed6ea9542d1351a21d919f3db490931e6006#npm:5.2.0"],\
           ["react-quill", "virtual:2201d61b5aa40b5edc493fd271fdb748a4088a5bff1bcc482561c184684b1fd9eb1c36c67ffdb070ec0b2c8a6161ed6ea9542d1351a21d919f3db490931e6006#npm:2.0.0"],\
           ["sass", "npm:1.75.0"],\
@@ -14754,6 +14777,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["memfs", "npm:3.5.3"],\
           ["fs-monkey", "npm:1.0.5"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["memoize-one", [\
+      ["npm:4.0.3", {\
+        "packageLocation": "./.yarn/cache/memoize-one-npm-4.0.3-6aef1020af-0ca0a07a0e.zip/node_modules/memoize-one/",\
+        "packageDependencies": [\
+          ["memoize-one", "npm:4.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -16856,6 +16888,31 @@ const RAW_RUNTIME_STATE =
           "@types/react-dom",\
           "@types/react",\
           "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-highlight-words", [\
+      ["npm:0.20.0", {\
+        "packageLocation": "./.yarn/cache/react-highlight-words-npm-0.20.0-02e799bf4d-1d3aec0c8b.zip/node_modules/react-highlight-words/",\
+        "packageDependencies": [\
+          ["react-highlight-words", "npm:0.20.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:2201d61b5aa40b5edc493fd271fdb748a4088a5bff1bcc482561c184684b1fd9eb1c36c67ffdb070ec0b2c8a6161ed6ea9542d1351a21d919f3db490931e6006#npm:0.20.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-highlight-words-virtual-50112e0fef/0/cache/react-highlight-words-npm-0.20.0-02e799bf4d-1d3aec0c8b.zip/node_modules/react-highlight-words/",\
+        "packageDependencies": [\
+          ["react-highlight-words", "virtual:2201d61b5aa40b5edc493fd271fdb748a4088a5bff1bcc482561c184684b1fd9eb1c36c67ffdb070ec0b2c8a6161ed6ea9542d1351a21d919f3db490931e6006#npm:0.20.0"],\
+          ["@types/react", "npm:18.2.79"],\
+          ["highlight-words-core", "npm:1.2.2"],\
+          ["memoize-one", "npm:4.0.3"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
           "react"\
         ],\
         "linkType": "HARD"\

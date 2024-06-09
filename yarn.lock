@@ -4423,6 +4423,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-highlight-words@npm:^0":
+  version: 0.20.0
+  resolution: "@types/react-highlight-words@npm:0.20.0"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10c0/95d268fc24f4ad43e1b4c5be41f66b6401b90977fd4e2c9de37bf696b0c97fd216c1f6c4a833236886183dbda766d3d0485333997ac193360c35a2a36f46534b
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, @types/react@npm:^18":
   version: 18.2.79
   resolution: "@types/react@npm:18.2.79"
@@ -8979,6 +8988,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight-words-core@npm:^1.2.0":
+  version: 1.2.2
+  resolution: "highlight-words-core@npm:1.2.2"
+  checksum: 10c0/36a2a93d483dbfa849e6b9832a61053d033d8eab1d271c4f8ddf05c5cc8887c696ddbd816a6fe7604d74b5afae9c643c8620e44e4a0ae5914bb9ab639da016a7
+  languageName: node
+  linkType: hard
+
 "hmac-drbg@npm:^1.0.1":
   version: 1.0.1
   resolution: "hmac-drbg@npm:1.0.1"
@@ -10650,6 +10666,7 @@ __metadata:
     "@types/qs": "npm:^6"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
+    "@types/react-highlight-words": "npm:^0"
     axios: "npm:^1.6.8"
     clsx: "npm:^2.1.1"
     eslint: "npm:^8"
@@ -10667,6 +10684,7 @@ __metadata:
     qs: "npm:^6.12.1"
     react: "npm:^18"
     react-dom: "npm:^18"
+    react-highlight-words: "npm:^0.20.0"
     react-icons: "npm:^5.2.0"
     react-quill: "npm:^2.0.0"
     sass: "npm:^1.75.0"
@@ -11060,6 +11078,13 @@ __metadata:
   dependencies:
     fs-monkey: "npm:^1.0.4"
   checksum: 10c0/038fc81bce17ea92dde15aaa68fa0fdaf4960c721ce3ffc7c2cb87a259333f5159784ea48b3b72bf9e054254d9d0d0d5209d0fdc3d07d08653a09933b168fbd7
+  languageName: node
+  linkType: hard
+
+"memoize-one@npm:^4.0.0":
+  version: 4.0.3
+  resolution: "memoize-one@npm:4.0.3"
+  checksum: 10c0/0ca0a07a0eb58867563cb05abf74596b21df02ac1046c55e5639367df8be64fa5a4a82430520f88f1ffaddec2657355b9189471ca3cff700e2164b662569e060
   languageName: node
   linkType: hard
 
@@ -12484,7 +12509,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.8, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -12774,6 +12799,19 @@ __metadata:
     react: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0
     react-dom: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0
   checksum: 10c0/0d60a0ea758529c32a706d0c69d70b69fb94de3c46442fffdee34f08f51ffceddbb5395b41dfd1565895653e9f60f98ca525835be9d5db1f16d6b22be12f4cd4
+  languageName: node
+  linkType: hard
+
+"react-highlight-words@npm:^0.20.0":
+  version: 0.20.0
+  resolution: "react-highlight-words@npm:0.20.0"
+  dependencies:
+    highlight-words-core: "npm:^1.2.0"
+    memoize-one: "npm:^4.0.0"
+    prop-types: "npm:^15.5.8"
+  peerDependencies:
+    react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: 10c0/1d3aec0c8b8865e3b2855a2fbb11c0af3fad7fc3e2685fcd4952e8bd59b8d8874ecff773830bdcc135f81ec7d13e1f2d6de0f05a153a82b4e192534339cb5550
   languageName: node
   linkType: hard
 
