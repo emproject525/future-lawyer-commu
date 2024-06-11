@@ -5,27 +5,27 @@
   width: 100%;
   height: auto;
   line-height: 1.8em;
-  padding: #{variable.$gap * 2};
   white-space: break-spaces;
 }
 
 .relative_box {
   position: relative;
+  padding: #{variable.$gap * 2};
 }
 
 .typing {
   @include common_typing;
   appearance: textarea;
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  // font: medium -moz-fixed;
-  // font: -webkit-small-control;
-}
+  position: relative;
+  &::before {
+    content: attr(data-content);
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    color: var(--gray-500-hex);
+  }
 
-.typing_bg {
-  @include common_typing;
-  user-select: none;
-  // border: 1px solid gray;
-  color: var(--gray-500-hex);
+  .wrong {
+    background-color: #f1a7a7a3;
+  }
 }
