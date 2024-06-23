@@ -28,27 +28,36 @@
 }
 
 .comment_item {
-  font-size: 0.9em;
-  line-height: 1.4em;
+  font-size: 0.9rem;
+  line-height: 1.4rem;
   margin-bottom: variable.$gap * 2;
   white-space: pre-wrap;
 
   .noname_title {
-    font-size: 0.8em;
+    font-size: 0.8rem;
     font-weight: bold;
     user-select: none;
   }
 
   .noname_regdt {
-    font-size: 0.8em;
+    font-size: 0.8rem;
     color: var(--gray-700-hex);
-    margin-left: 0.8em;
     user-select: none;
+  }
+
+  .ico {
+    button {
+      padding: 0;
+      font-size: 0.8rem;
+      color: var(--gray-700-hex);
+      margin-left: 0.8rem;
+      cursor: pointer;
+    }
   }
 }
 
 .contents_body {
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: normal;
 
   // ol,

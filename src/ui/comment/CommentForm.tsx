@@ -11,15 +11,15 @@ import { useParams } from 'next/navigation';
 import { ICommentParent, IRes } from '@/types';
 import FlexBox from '@/components/Box/FlexBox';
 import Button from '@/components/Button/Button';
-import TextArea from '@/components/Input/TextArea';
 import Span from '@/components/Font/Span';
-import CommentParent from '@/ui/commentAdd/CommentParent';
+import CommentBox from './CommentBox';
 import { escapeMySQL } from '@/utils/mySqlUtils';
 import Spinner from '@/components/Icon/Spinner';
 import AppSessionContext from '../auth/AppSessionContext';
 import AuthWrapper from '../auth/AuthWrapper';
+import Input from '@/components/Input/Input';
 
-type CommentAddProps = {
+type CommentFormProps = {
   /**
    * 전체 댓글 수
    */
@@ -32,7 +32,7 @@ type CommentList = {
   first: number;
 };
 
-const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
+const CommentForm: React.FC<CommentFormProps> = ({ totalCommentCnt }) => {
   const [body, setBody] = useState('');
   const { seq } = useParams();
   const [target, setTarget] = useState<ICommentParent[]>([]); // 렌더링 대상
@@ -151,7 +151,7 @@ const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
           </div>
           <div className="my-2">
             {target.map((commentItem, idx) => (
-              <CommentParent
+              <CommentBox
                 key={`comment-${seq}-${commentItem.seq}`}
                 title={`익명 ${cnt - (target.length - idx) + 1}`}
                 isLast={target.length === idx + 1}
@@ -177,11 +177,7 @@ const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
           <AuthWrapper needLogin>
             <>
               <div className="my-2">
-                <TextArea
-                  rows={5}
-                  value={body}
-                  onChange={(e) => setBody(e.target.value)}
-                />
+                <Input value={body} onChange={(e) => setBody(e.target.value)} />
               </div>
               <Button
                 block
@@ -207,4 +203,4 @@ const CommentAdd: React.FC<CommentAddProps> = ({ totalCommentCnt }) => {
   );
 };
 
-export default CommentAdd;
+export default CommentForm;

@@ -16,26 +16,31 @@ import { escapeMySQL } from '@/utils/mySqlUtils';
 import Hr from '@/components/Hr/Hr';
 import AppSessionContext from '../auth/AppSessionContext';
 
-export type CommentParentProps = {
+export type CommentBoxProps = {
   /**
    * 작성자 (익명 N)
    */
   title: string;
   isLast?: boolean;
-} & Pick<ICommentParent, 'seq' | 'regDt' | 'body' | 'replyCnt' | 'delYn'>;
+} & Pick<
+  ICommentParent,
+  'seq' | 'regDt' | 'body' | 'replyCnt' | 'delYn' | 'userSeq' | 'contentsSeq'
+>;
 
 /**
  * TODO 본인 댓글 삭제/수정 기능
  */
-const CommentParent = ({
+const CommentBox = ({
   title,
+  userSeq,
   regDt,
   body,
   replyCnt,
   seq,
   delYn,
   isLast,
-}: CommentParentProps) => {
+  contentsSeq,
+}: CommentBoxProps) => {
   const [replyBody, setReplyBody] = useState('');
   const [openReply, setOpenReply] = useState(false);
   const [openReplyForm, setOpenReplyForm] = useState(false);
@@ -45,7 +50,7 @@ const CommentParent = ({
     inputRef.current = ele;
   }, []);
 
-  // 답글
+  // 답글 조회
   const { data, refetch } = useQuery<IComment[], AxiosError>({
     initialData: [],
     _defaulted: false,
@@ -65,10 +70,11 @@ const CommentParent = ({
       token: string;
     }
   >({
+    mutationKey: [contentsSeq],
     mutationFn: ({ body, token }) =>
       client
         .post(
-          `/comment/${seq}`,
+          `/comment/${contentsSeq}`,
           {
             body: escapeMySQL(body),
             parentSeq: seq,
@@ -93,6 +99,42 @@ const CommentParent = ({
     },
   });
 
+  // 댓글+답글 수정
+  const editComment = useMutation<
+    IRes<boolean>,
+    AxiosError,
+    {
+      body: string;
+      token: string;
+      seq: number;
+    }
+  >({
+    mutationKey: [contentsSeq],
+    mutationFn: ({ body, token, seq }) =>
+      client
+        .post(
+          `/comment/${contentsSeq}/${seq}`,
+          {
+            body: escapeMySQL(body),
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        .then((res) => res.data),
+    onSuccess: (res) => {
+      if (res.header.success && res.body) {
+        alert('수정하였습니다.');
+        refetch().then(() => {
+          setOpenReply(true);
+        });
+      }
+    },
+  });
+
   const cnt = useMemo(
     () => data.length || replyCnt || 0,
     [data.length, replyCnt],
@@ -101,7 +143,25 @@ const CommentParent = ({
   return (
     <AppSessionContext.Consumer>
       {({ data: authData }) => (
-        <Comment body={body} regDt={regDt.slice(0, 16)} title={title}>
+        <Comment
+          body={body}
+          regDt={regDt.slice(0, 16)}
+          title={title}
+          onEdit={
+            userSeq === authData?.user.seq
+              ? (newBody) => {
+                  if (authData?.user.accessToken) {
+                    editComment.mutate({
+                      body: newBody,
+                      seq,
+                      token: authData?.user.accessToken,
+                    });
+                  }
+                }
+              : undefined
+          }
+          onDelete={userSeq === authData?.user.seq ? () => {} : undefined}
+        >
           <FlexBox
             className="mt-1"
             style={{
@@ -191,6 +251,12 @@ const CommentParent = ({
                   title={`답글 ${idx + 1}`}
                   regDt={item.regDt}
                   body={item.body}
+                  onEdit={
+                    item.userSeq === authData?.user.seq ? () => {} : undefined
+                  }
+                  onDelete={
+                    item.userSeq === authData?.user.seq ? () => {} : undefined
+                  }
                 />
               ))}
             </div>
@@ -202,4 +268,4 @@ const CommentParent = ({
   );
 };
 
-export default CommentParent;
+export default CommentBox;

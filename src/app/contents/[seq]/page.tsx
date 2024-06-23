@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { CgMenu } from 'react-icons/cg';
-import { CiEdit } from 'react-icons/ci';
+import { FiEdit3 } from 'react-icons/fi';
 import { IoShareSocialSharp } from 'react-icons/io5';
 import { RxDividerVertical } from 'react-icons/rx';
 import clsx from 'clsx';
@@ -12,7 +12,7 @@ import Span from '@/components/Font/Span';
 import Link from 'next/link';
 import Hr from '@/components/Hr/Hr';
 import FlexBox from '@/components/Box/FlexBox';
-import CommendAdd from '@/ui/commentAdd';
+import CommentForm from '@/ui/comment/CommentForm';
 import AuthWrapper from '@/ui/auth/AuthWrapper';
 import DeleteButton from '@/ui/contents/DeleteButton';
 
@@ -144,7 +144,7 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
             <AuthWrapper userSeq={body?.userSeq}>
               <Link href={`/contents/${body?.seq}/edit`}>
                 <Button flexContents variant="outlined" color="gray-200">
-                  <CiEdit />
+                  <FiEdit3 />
                   수정
                 </Button>
               </Link>
@@ -154,7 +154,7 @@ export default async function Page({ params }: Pick<PageProps, 'params'>) {
             </AuthWrapper>
           </FlexBox>
           <Hr />
-          <CommendAdd totalCommentCnt={body?.commentCnt || 0} />
+          <CommentForm totalCommentCnt={body?.commentCnt || 0} />
         </div>
       )}
     </main>
