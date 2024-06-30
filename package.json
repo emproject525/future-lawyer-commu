@@ -8,7 +8,13 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "commit": "./.yarn/unplugged/cz-customizable-npm-7.0.0-1704ad9243/node_modules/cz-customizable/standalone.js"
+  },
+  "config": {
+    "cz-customizable": {
+      "config": "cz-config.cjs"
+    }
   },
   "dependencies": {
     "@tanstack/react-query": "^5.35.1",
@@ -51,6 +57,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-highlight-words": "^0",
+    "cz-customizable": "^7.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
     "eslint-plugin-storybook": "^0.8.0",
@@ -65,5 +72,10 @@
     "typescript": "5.4.5",
     "webpack": "^5.91.0"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.1.1",
+  "dependenciesMeta": {
+    "cz-customizable@7.0.0": {
+      "unplugged": true
+    }
+  }
 }
